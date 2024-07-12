@@ -69,4 +69,25 @@
         <input type="number" id="num3" name="num3" readonly>
     </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+<script>
+    $(function(){
+        $("#btn").click(function(){
+            var big = $("#num2").val();
+            var small = $("#num1").val()  ;
+            if($("#num1").val() > $("#num2").val()  ){
+                 big = $("#num1").val();
+                small = $("#num2").val()  ;
+            }
+            var disc =  1-   small / big ;
+            $("#num3").val(disc.toFixed(4));
+        })
+
+
+    })
+
+
+</script>
 </html>
