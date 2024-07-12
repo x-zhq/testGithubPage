@@ -3,32 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Speech to Text Input</title>
+  <title>Speech to Text Input with annyang</title>
 </head>
 <body>
   <h1>Speech to Text Input Example</h1>
   <input type="text" id="speechInput" placeholder="Speak something..." />
   <button onclick="startDictation()">Start Dictation</button>
 
+  <!-- Include the annyang library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+
   <script>
     function startDictation() {
-      if (window.hasOwnProperty('webkitSpeechRecognition')) {
-        var recognition = new webkitSpeechRecognition();
-
-        recognition.continuous = false;
-        recognition.interimResults = false;
-
-        recognition.lang = "en-US";
-        recognition.start();
-
-        recognition.onresult = function(event) {
-          document.getElementById('speechInput').value = event.results[0][0].transcript;
-          recognition.stop();
+      if (annyang) {
+        // Define the function to execute when speech is recognized
+        var commands = {
+          '*text': function(text) {
+            document.getElementById('speechInput').value = text;
+          }
         };
 
-        recognition.onerror = function(event) {
-          recognition.stop();
-        };
+        // Add the commands to annyang
+        annyang.addCommands(commands);
+
+        // Start listening
+        annyang.start();
       } else {
         alert("Speech recognition is not supported in this browser. Please use Google Chrome.");
       }
