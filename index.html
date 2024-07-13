@@ -75,13 +75,19 @@
 <script>
     $(function(){
         $("#btn").click(function(){
-            var big = $("#num2").val();
-            var small = $("#num1").val()  ;
-            if($("#num1").val() > $("#num2").val()  ){
-                 big = $("#num1").val();
-                small = $("#num2").val()  ;
+             var small = Number($("#num1").val() ) ;
+            var big = Number($("#num2").val());
+            if(small> big){
+                var tmp = big;
+                big = small;
+                small = tmp;
             }
+
+            console.log("big", big);
+            console.log("small", small);
+            
             var disc =  1-   small / big ;
+            console.log("disc", disc);
             $("#num3").val(disc.toFixed(4));
         })
 
