@@ -72,6 +72,51 @@
 
         <button id="btn2" onclick="reset();" style=" background-color: burlywood; color: #333; width: calc(100% - 40px);height: 55px;" >RESET</button>
     </div>
+
+    <hr>
+
+
+    <div class="container">
+
+        <h3>Pythagorean</h3>
+        <p>Enter any two sides of a right triangle:</p>
+        <label for="sideA">side A:</label>
+        <input type="number" id="sideA" name="sideA" placeholder="Side A">
+
+        <br>
+        <label for="sideB">side B:</label>
+        <input type="number" id="sideB" name="sideB"   placeholder="Side B" >
+
+        <br>
+        <label for="sideC">side C:</label>
+        <input type="number" id="sideC" name="sideC"   placeholder="Side C (Hypotenuse)" >
+
+     
+        <button id="btnCalc" style="width: calc(100% - 40px);height: 55px;"  
+                         onclick="calculatePythagorean()"
+                                            >Calculate</button>
+        <br/>
+
+        <!-- <label for="numA">A:</label>
+        <input type="number" id="numA" name="numA">
+
+        <label for="numB">B:</label>
+        <input type="number" id="numB" name="numB">
+
+        <label for="numC">C:</label>
+        <input type="number" id="numC" name="numC">
+
+        <button id="btnCalc" style="width: calc(100% - 40px);height: 55px;">Calculate</button> -->
+       
+        <!-- <label for="num3">Discount:</label> -->
+        <!-- <input type="number" id="num3" name="num3" placeholder="折扣" readonly> -->
+        <br>
+        <button id="btnClear" onclick="reset();" style=" background-color: burlywood; color: #333; width: calc(100% - 40px);height: 55px;" >RESET</button>
+    </div>
+
+
+
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
@@ -100,7 +145,26 @@
         $("#num1").val('');
         $("#num2").val('');
         $("#num3").val('');
+        $("#sideA").val(null);
+        $("#sideB").val(null);
+        $("#sideC").val(null);
     }
+
+    function calculatePythagorean() {
+            const a = parseFloat(document.getElementById("sideA").value);
+            const b = parseFloat(document.getElementById("sideB").value);
+            const c = parseFloat(document.getElementById("sideC").value);
+            
+            if (!isNaN(a) && !isNaN(b)) {
+                document.getElementById("sideC").value = Math.sqrt(a * a + b * b).toFixed(2);
+            } else if (!isNaN(a) && !isNaN(c)) {
+                document.getElementById("sideB").value = Math.sqrt(c * c - a * a).toFixed(2);
+            } else if (!isNaN(b) && !isNaN(c)) {
+                document.getElementById("sideA").value = Math.sqrt(c * c - b * b).toFixed(2);
+            } else {
+                alert("Please enter values for any two sides.");
+            }
+        }
 
 
 </script>

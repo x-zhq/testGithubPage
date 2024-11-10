@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythagorean Theorem Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input[type="number"] {
+            margin: 5px;
+        }
+    </style>
+    <script>
+        function calculatePythagorean() {
+            const a = parseFloat(document.getElementById("sideA").value);
+            const b = parseFloat(document.getElementById("sideB").value);
+            const c = parseFloat(document.getElementById("sideC").value);
+            
+            if (!isNaN(a) && !isNaN(b)) {
+                document.getElementById("sideC").value = Math.sqrt(a * a + b * b).toFixed(2);
+            } else if (!isNaN(a) && !isNaN(c)) {
+                document.getElementById("sideB").value = Math.sqrt(c * c - a * a).toFixed(2);
+            } else if (!isNaN(b) && !isNaN(c)) {
+                document.getElementById("sideA").value = Math.sqrt(c * c - b * b).toFixed(2);
+            } else {
+                alert("Please enter values for any two sides.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Pythagorean Theorem Calculator</h1>
+    <p>Enter any two sides of a right triangle:</p>
+    <input type="number" id="sideA" placeholder="Side A">
+    <input type="number" id="sideB" placeholder="Side B" >
+    <input type="number" id="sideC" placeholder="Side C (Hypotenuse)" >
+    <br><br>
+    <button onclick="calculatePythagorean()">Calculate</button>
+</body>
+</html>
