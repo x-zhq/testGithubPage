@@ -3,59 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Camera Capture</title>
+  <title>Select and Display Photos</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       padding: 20px;
     }
-    video, canvas, img {
-      width: 90%;
-      max-width: 400px;
-      margin-top: 10px;
+    #photo-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
     }
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
+    .photo {
+      width: 150px;
+      height: auto;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    label {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>Take a Photo</h1>
-  <video id="video" autoplay playsinline></video><br>
-  <button id="capture">Capture Photo</button>
-  <canvas id="canvas" style="display:none;"></canvas>
-  <h2>Captured Photo:</h2>
-  <img id="photo" alt="Captured image will appear here"/>
+  <h1>Select Photos from Gallery</h1>
+  
+  <label for="file-input">Choose Photos</label>
+  <input type="file" id="file-input" multiple accept="image/*" />
+  
+  <div id="photo-gallery"></div>
 
   <script>
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const photo = document.getElementById('photo');
-    const captureButton = document.getElementById('capture');
+    const fileInput = document.getElementById('file-input');
+    const gallery = document.getElementById('photo-gallery');
 
-    // Ask for camera access and stream it
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        video.srcObject = stream;
-      })
-      .catch(err => {
-        alert('Camera access denied or not supported.');
-        console.error(err);
+    fileInput.addEventListener('change', () => {
+      gallery.innerHTML = ''; // Clear previous photos
+
+      const files = fileInput.files;
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('photo');
+          gallery.appendChild(img);
+        };
+        reader.readAsDataURL(file);
       });
-
-    // Capture image on button click
-    captureButton.addEventListener('click', () => {
-      const context = canvas.getContext('2d');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      // Convert canvas to image and display it
-      const imageDataURL = canvas.toDataURL('image/png');
-      photo.src = imageDataURL;
     });
   </script>
 
